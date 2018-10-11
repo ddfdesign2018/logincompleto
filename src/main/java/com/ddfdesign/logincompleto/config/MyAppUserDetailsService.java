@@ -20,7 +20,7 @@ public class MyAppUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
         UserInfo activeUserInfo = userInfoDAO.getActiveUser(userName);
         GrantedAuthority authority = new SimpleGrantedAuthority(activeUserInfo.getRole());
-        System.out.println("MyAppUserDetailsService entrada");
+        System.out.println("MyAppUserDetailsService");
         UserDetails userDetails = (UserDetails)new User(activeUserInfo.getUserName(),
                 activeUserInfo.getPassword(), Arrays.asList(authority));
         return userDetails;

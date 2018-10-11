@@ -1,5 +1,7 @@
 package com.ddfdesign.logincompleto.controller;
 
+import com.ddfdesign.logincompleto.dao.UserInfoDAO;
+import com.ddfdesign.logincompleto.entity.UserInfo;
 import com.ddfdesign.logincompleto.hello.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,13 +61,18 @@ public class UserInfoController {
         return "greeting";
     }
 
+    //Post method que crea un usuario en la bbdd desde formulario
     @PostMapping("/greeting")
     public String greetingSubmit(@ModelAttribute Greeting greeting) {
         System.out.println("Greeting post");
         System.out.println(greeting.getPassword());
         System.out.println(greeting.getUsername());
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        System.out.println("Encriptacion: " + bCryptPasswordEncoder.encode(greeting.getPassword()));
+        //System.out.println("Encriptacion: " + bCryptPasswordEncoder.encode(greeting.getPassword()));
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName(greeting.getUsername());
+        userInfo.setPassword(bCryptPasswordEncoder.encode(greeting.getPassword()));
+        userInfoService.createUser(userInfo);
         return "result";
     }
 
